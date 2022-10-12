@@ -12,6 +12,7 @@ on:
 
 
 jobs:
+
   job_nano_build:
     name: Build plugin
     strategy:
@@ -36,6 +37,31 @@ jobs:
       - name: Build
         run: |
           make BOLOS_SDK=${{ matrix.SDK }}
+
+  job_nano_build_testing:
+    name: Build plugin for testing
+    strategy:
+      matrix:
+        include:
+          - SDK: "$NANOS_SDK"
+            name: nanos
+          - SDK: "$NANOX_SDK"
+            name: nanox
+          - SDK: "$NANOSP_SDK"
+            name: nanosp
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build
+        run: |
+          make DEBUG=1 BOLOS_SDK=${{ matrix.SDK }}
           mv bin/app.elf plugin_${{ matrix.name }}.elf
 
       - name: Upload
