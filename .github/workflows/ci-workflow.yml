@@ -41,8 +41,8 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: alkemi_${{ matrix.name }}_plugin
-          path: ./*.elf
+          name: binaries
+          path: plugin_${{ matrix.name }}.elf
 
   job-e2e-tests:
     name: E2E tests for NanoS, X and S+
@@ -68,12 +68,15 @@ jobs:
         run: |
           cd tests && yarn install
 
-      - name: Download app binary
+      - name: Download binaries
         uses: actions/download-artifact@v2
+        with:
+         name: binaries
+         path: tests/elfs
 
-      - name: Gather all artifacts
+      - name: Check tests
         run: |
-          mv *_plugin/*.elf tests/elfs
+          ls -l tests/elfs
 
       - name: Run zemu tests
         run: |
