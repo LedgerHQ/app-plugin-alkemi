@@ -12,8 +12,8 @@ on:
 
 
 jobs:
-  job_build_plugins:
-    name: Build plugins
+  job_nano_build:
+    name: Build plugin
     strategy:
       matrix:
         include:
@@ -36,51 +36,17 @@ jobs:
       - name: Build
         run: |
           make BOLOS_SDK=${{ matrix.SDK }}
-          mkdir -p ./tests/elfs/
-          mv bin/app.elf ./tests/elfs/plugin_${{ matrix.name }}.elf
+          mv bin/app.elf plugin_${{ matrix.name }}.elf
 
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: binaries
-          path: tests/elfs/plugin_${{ matrix.name }}.elf
-
-  job_build_debug_ethereum:
-    name: Build Ethereum application for Nano X & S/SP testing
-    strategy:
-      matrix:
-        include:
-          - SDK: "$NANOS_SDK"
-            name: nanos
-          - SDK: "$NANOX_SDK"
-            name: nanox
-          - SDK: "$NANOSP_SDK"
-            name: nanosp
-    runs-on: ubuntu-latest
-    container:
-     image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
-    steps:
-      - name: Checkout app-ethereum
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      - name: Build ethereum
-        run: |
-          make clean
-          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=${{ matrix.SDK }} CHAIN=ethereum
-      - name: Move binary to test directory
-        run: |
-          mkdir -p ./tests/elfs/
-          mv bin/app.elf ./tests/elfs/ethereum_${{ matrix.name }}.elf
-      - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
-        with:
-          name: binaries
-          path: ./tests/elfs/ethereum_${{ matrix.name }}.elf
+          name: alkemi_${{ matrix.name }}_plugin
+          path: ./*.elf
 
   job-e2e-tests:
     name: E2E tests for NanoS, X and S+
-    needs: [job_build_plugins, job_build_debug_ethereum]
+    needs: [job_nano_build]
     runs-on: ubuntu-latest
     steps:
       - name: Clone
@@ -102,14 +68,12 @@ jobs:
         run: |
           cd tests && yarn install
 
-      - name: Download built binaries
+      - name: Download app binary
         uses: actions/download-artifact@v2
-        with:
-          name: binaries
-          path: tests/elfs/
 
-      - name: Check download binaries
-        run: ls -lh ./tests/elfs
+      - name: Gather all artifacts
+        run: |
+          mv *_plugin/*.elf tests/elfs
 
       - name: Run zemu tests
         run: |
