@@ -46,7 +46,7 @@ jobs:
           path: tests/elfs/plugin_${{ matrix.name }}.elf
 
   job_build_debug_ethereum:
-    name: Build Ethereum application for Nano S testing
+    name: Build Ethereum application for Nano X & S/SP testing
     strategy:
       matrix:
         include:
@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: binaries
-          path: tests/elfs/ethereum_${{ matrix.name }}.elf
+          path: ./tests/elfs/ethereum_${{ matrix.name }}.elf
 
   job-e2e-tests:
     name: E2E tests for NanoS, X and S+
@@ -107,6 +107,9 @@ jobs:
         with:
           name: binaries
           path: tests/elfs/
+
+      - name: Check download binaries
+        run: ls -lh ./tests/elfs
 
       - name: Run zemu tests
         run: |
