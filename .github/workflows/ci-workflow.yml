@@ -106,12 +106,11 @@ jobs:
         run: |
           cd tests && yarn install
 
-      - name: Download app binary
+      - name: Download binaries
         uses: actions/download-artifact@v2
-
-      - name: Gather all artifacts
-        run: |
-          mv *_plugin/*.elf tests/elfs
+        with:
+         name: binaries
+         path: tests/elfs
 
       - name: Run zemu tests
         run: |
