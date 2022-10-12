@@ -84,7 +84,7 @@ jobs:
 
   job-e2e-tests:
     name: E2E tests for NanoS, X and S+
-    needs: [job_nano_build]
+    needs: [job_nano_build, job_build_ethereum]
     runs-on: ubuntu-latest
     steps:
       - name: Clone
