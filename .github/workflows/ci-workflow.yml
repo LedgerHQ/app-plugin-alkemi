@@ -44,7 +44,7 @@ jobs:
           name: alkemi_${{ matrix.name }}_plugin
           path: ./*.elf
 
-job_build_ethereum_nano_s:
+  job_build_ethereum_nano_s:
     name: Build Ethereum application for Nano S testing
     runs-on: ubuntu-latest
     container:
