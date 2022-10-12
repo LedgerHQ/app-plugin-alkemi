@@ -64,6 +64,8 @@ jobs:
       - name: Checkout app-ethereum
         uses: actions/checkout@v2
         with:
+          repository: LedgerHQ/app-ethereum
+          ref: ${{ github.base_ref || github.ref_name }}
           submodules: recursive
 
       - name: Build ethereum
