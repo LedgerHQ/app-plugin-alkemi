@@ -11,6 +11,20 @@ mkdir -p elfs
 # move to repo's root to build apps
 cd ..
 
+echo "*Building elfs for Nano SP..."
+
+echo "**Building app-plugin for Nano SP..."
+make clean BOLOS_SDK=$NANOSP_SDK
+make -j DEBUG=1 BOLOS_SDK=$NANOSP_SDK
+cp bin/app.elf "tests/elfs/plugin_nanosp.elf"
+
+echo "**Building app-ethereum for Nano SP..."
+cd $APP_ETHEREUM
+make clean BOLOS_SDK=$NANOSP_SDK
+make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum
+cd -
+cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanosp.elf"
+
 echo "*Building elfs for Nano S..."
 
 echo "**Building app-plugin for Nano S..."

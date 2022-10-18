@@ -32,7 +32,7 @@ const RANDOM_ADDRESS = '0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj'
 
 const sim_options = {
     // Uncomment for testing
-    // logging: true,
+    logging: true,
     X11: true,
     startDelay: 5000,
     startText: 'is ready',
