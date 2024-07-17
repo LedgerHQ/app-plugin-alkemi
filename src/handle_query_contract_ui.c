@@ -19,10 +19,7 @@ bool set_asset_address_ui(ethQueryContractUI_t *msg, context_t *context) {
             // Prefix the address with `0x`.
             msg->msg[0] = '0';
             msg->msg[1] = 'x';
-            ret = getEthAddressStringFromBinary(context->asset,
-                                                msg->msg + 2,
-                                                msg->pluginSharedRW->sha3,
-                                                chainid);
+            ret = getEthAddressStringFromBinary(context->asset, msg->msg + 2, chainid);
             break;
         default:
             break;
@@ -42,10 +39,7 @@ bool set_holder_address_ui(ethQueryContractUI_t *msg, context_t *context) {
             // Prefix the address with `0x`.
             msg->msg[0] = '0';
             msg->msg[1] = 'x';
-            ret = getEthAddressStringFromBinary(context->holder,
-                                                msg->msg + 2,
-                                                msg->pluginSharedRW->sha3,
-                                                chainid);
+            ret = getEthAddressStringFromBinary(context->holder, msg->msg + 2, chainid);
             break;
         default:
             break;
@@ -64,10 +58,7 @@ bool set_address_collateral_ui(ethQueryContractUI_t *msg, context_t *context) {
             // Prefix the address with `0x`.
             msg->msg[0] = '0';
             msg->msg[1] = 'x';
-            ret = getEthAddressStringFromBinary(context->assetCollateral,
-                                                msg->msg + 2,
-                                                msg->pluginSharedRW->sha3,
-                                                chainid);
+            ret = getEthAddressStringFromBinary(context->assetCollateral, msg->msg + 2, chainid);
             break;
         default:
             break;
