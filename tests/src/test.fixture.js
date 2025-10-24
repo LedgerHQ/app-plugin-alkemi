@@ -12,16 +12,13 @@ async function waitForAppScreen(sim) {
 
 const Resolve = require('path').resolve;
 
-const NANOS_ETH_PATH = Resolve('elfs/ethereum_nanos.elf');
 const NANOX_ETH_PATH = Resolve('elfs/ethereum_nanox.elf');
 const NANOSP_ETH_PATH = Resolve('elfs/ethereum_nanosp.elf');
 
-const NANOS_PLUGIN_PATH = Resolve('elfs/plugin_nanos.elf');
 const NANOX_PLUGIN_PATH = Resolve('elfs/plugin_nanox.elf');
 const NANOSP_PLUGIN_PATH = Resolve('elfs/plugin_nanosp.elf');
 
 // Edit this: replace `Boilerplate` by your plugin name
-const NANOS_PLUGIN = { "Alkemi": NANOS_PLUGIN_PATH };
 const NANOX_PLUGIN = { "Alkemi": NANOX_PLUGIN_PATH };
 const NANOSP_PLUGIN = { "Alkemi": NANOSP_PLUGIN_PATH };
 
@@ -46,7 +43,6 @@ class PluginDeviceModel extends DeviceModel {
 }
 
 const nano_environments: PluginDeviceModel[] = [
-    { name: 'nanos', letter: 'S', path: NANOS_ETH_PATH, plugin: NANOS_PLUGIN, sdk: '2.1'},
     { name: 'nanox', letter: 'X', path: NANOX_ETH_PATH, plugin: NANOX_PLUGIN, sdk: '2.0.2'},
     { name: 'nanosp', letter: "SP", path: NANOSP_ETH_PATH, plugin: NANOSP_PLUGIN, sdk: '1.0'},
 ];
